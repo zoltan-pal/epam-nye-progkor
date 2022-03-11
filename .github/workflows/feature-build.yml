@@ -7,9 +7,6 @@ on:
       - 'bugfix/**'
       - 'hotfix/**'
       - 'release/**'
-  pull_request:
-    branches:
-      - 'main'
 
 jobs:
   build:
