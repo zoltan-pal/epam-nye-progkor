@@ -33,11 +33,12 @@ jobs:
         version_prefix=`mvn help:evaluate -Dexpression=project.version --quiet -DforceStdout --file warehouse/pom.xml | awk -F. '{print $1"."$2}'`
         version="$version_prefix.${{github.run_number}}-$GITHUB_SHA"
         echo "Setting artifact version to $version"
+        # Push version to env
+        echo "ARTIFACT_VERSION=$version" >> $GITHUB_ENV
         # Overwrite local artifact version
         mvn -B versions:set -DnewVersion="$version" --file warehouse/pom.xml
         # Build and deploy artifact
         mvn -B deploy --file warehouse/pom.xml
-        ls -la
         cp "warehouse/web/target/web-${version}.jar" "warehouse/web/target/warehouse.jar"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,6 +53,8 @@ jobs:
       uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
       with:
         images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE_NAME }}
+        tags: |
+          type=raw,value=${{ env.ARTIFACT_VERSION }}
     - name: Build and push Docker image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
