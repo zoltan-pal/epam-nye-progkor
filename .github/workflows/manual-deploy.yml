@@ -1,0 +1,24 @@
+name: Manual deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'App version to be deployed'
+        required: true
+        default: '0.1.11'
+
+
+env:
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_IMAGE_NAME: ${{ github.repository }}
+  APP_NAME: 'zoltan-pal-epam-nye-progkor'
+
+jobs:
+  deploy:
+    name: Deploy to Fly.io
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test flyctl
+        run: flyctl version
