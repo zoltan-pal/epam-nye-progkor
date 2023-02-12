@@ -1,0 +1,5 @@
+app = "zoltan-pal-epam-nye-progkor"
+kill_timeout = 120
+
+[[services]]
+  internal_port = 8080
