@@ -20,4 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test flyctl
-        run: flyctl version
+        run: |
+          curl -L https://fly.io/install.sh | sh
+          flyctl version
