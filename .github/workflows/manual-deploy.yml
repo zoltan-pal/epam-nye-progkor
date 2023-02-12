@@ -25,3 +25,9 @@ jobs:
           export FLYCTL_INSTALL="/home/runner/.fly"
           export PATH="$FLYCTL_INSTALL/bin:$PATH"
           flyctl version
+          docker pull ghcr.io/zoltan-pal/epam-nye-progkor:${{ github.event.inputs.version }}
+          flyctl deploy --image ghcr.io/zoltan-pal/epam-nye-progkor:${{ github.event.inputs.version }} --now
+          flyctl status
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        
