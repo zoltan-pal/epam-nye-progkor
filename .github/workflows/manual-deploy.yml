@@ -22,4 +22,6 @@ jobs:
       - name: Test flyctl
         run: |
           curl -L https://fly.io/install.sh | sh
+          export FLYCTL_INSTALL="/home/runner/.fly"
+          export PATH="$FLYCTL_INSTALL/bin:$PATH"
           flyctl version
