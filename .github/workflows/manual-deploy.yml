@@ -25,6 +25,8 @@ jobs:
           registry: ${{ env.DOCKER_REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: Test flyctl
         run: |
           curl -L https://fly.io/install.sh | sh
